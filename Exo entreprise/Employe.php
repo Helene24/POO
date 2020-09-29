@@ -1,4 +1,6 @@
 <?php
+//require 'Agence.php';
+
 class employe
 {
     protected $nom;
@@ -7,8 +9,9 @@ class employe
     private $fonction;
     private $salaire;
     private $service;
+    private $agence;
 
-    public function __construct($nom, $prenom, $dateEmbauche, $fonction,$salaire, $service)
+    public function __construct($nom, $prenom, $dateEmbauche, $fonction,$salaire, $service, $agence)
     {
         $this->nom = $nom;
         $this->prenom = $prenom;
@@ -16,6 +19,7 @@ class employe
         $this->fonction = $fonction;
         $this->salaire = $salaire;
         $this->service = $service;
+        $this->agence = $agence;
         //var_dump("$this->nom $this->prenom $this->dateEmbauche $this->fonction $this->salaire $this->service");
     }
 
@@ -79,12 +83,23 @@ class employe
         return $this->service;
     }
 
-    public function anciennete()
+    public function setAgence($agence)
+    {
+        $this->agence = $agence;
+    }
+
+    public function getAgence()
+    {
+        return $this->agence;
+    }
+
+    public function anciennete(int $ancienne)
     {
         $aujourdhui= new DateTime();
         $dateEmbauch=new DateTime($this->dateEmbauche);     
         $ancienne= date_diff($aujourdhui,$dateEmbauch);
-        $ancienne= $ancienne->y;
+       
+        $ancienne = $ancienne->y;
         var_dump("L'anciennenete de $this->prenom $this->nom est de $ancienne ans");
         $this->ancienne = $ancienne;
     }
@@ -106,39 +121,27 @@ class employe
         $totalPrimesEtSalaire= $this->salaire+ $prime2Anc + $prime5;
         var_dump("Le total du salaire annuel avec primes de $this->prenom $this->nom est de $totalPrimesEtSalaire euros");
 
+    }    
+
+    public function ChVac()
+    {
+        if ($this->ancienne > 1)
+        { 
+            var_dump("$this->prenom $this->nom peut disposer de chèques vacances");
+        }
+        else
+        {
+            var_dump("$this->prenom $this->nom ne peut pas disposer de chèques vacances");
+        }
     }
 
-
-    
 }
 $employe = new ArrayObject();
-$employe->append(new employe("Durand", "Pierre", "2000-06-15", "ouvrier", "30000", "Technique"));
-$employe->append(new employe("Dupont", "Chantal", "2010-12-13", "secretaire", "26000", "administratif"));
-$employe->append(new employe("Marchand", "Simone", "2008-05-07", "commerciale", "27000", "Commercial"));
-$employe->append(new employe("Martin", "Raymond", "2014-07-18", "comptable", "31000", "Comptabilité"));
-$employe->append(new employe("Leroy", "Fabien", "2016-04-26", "ouvrier", "34000", "Technique"));
-
-var_dump($employe);
-$employe->asort();
-echo "test";
-var_dump($employe);
-
-$MS = 0;
-foreach($employe as $emp){
-    $MS += $emp->getSalaire();
-}
-var_dump( "la MS est de $MS ");
-
-$nbreEmpl = 0;
-foreach($employe as $nbre){
-    $nbreEmpl += count($nbre);
-}
-var_dump("Le nombre d'employé est de $nbreEmpl")
-
-
-
-
-//var_dump("l'ordre alphabétique est $empl")
+$employe->append(new employe("Durand", "Pierre", "2000-06-15", "ouvrier", "30000", "Technique", "0"));
+$employe->append(new employe("Dupont", "Chantal", "2010-12-13", "secretaire", "26000", "Administratif", "1"));
+$employe->append(new employe("Marchand", "Simone", "2008-05-07", "commerciale", "27000", "Commercial", "2"));
+$employe->append(new employe("Martin", "Raymond", "2014-07-18", "comptable", "31000", "Comptabilité", "2"));
+$employe->append(new employe("Leroy", "Fabien", "2020-04-26", "ouvrier", "34000", "Technique", "1"));
 
 ?>
 

@@ -9,8 +9,7 @@
 
 <?php
 
-include_once "Employe.php";
-
+include "Employe.php";
 
 if (isset($_GET["employe"]))
 {
